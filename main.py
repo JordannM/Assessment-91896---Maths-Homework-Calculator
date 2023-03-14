@@ -11,6 +11,7 @@ window.title("Perimeter and Area Calculator of Shapes")
 window.geometry("500x300")
 window.config(bg="#D3E0E4")
 window.resizable(width=False, height=False)
+window.attributes('-fullscreen', True)
 
 #function
 def get_shape():
@@ -21,11 +22,11 @@ def get_shape():
 #GUI/drop down list for shape selection
 user_input = ttk.Combobox(window, width=12, state="readonly")
 
-user_input['values'] = ('Circle' ,'Square' ,'Rectangle' ,'triangle')  #combobox list
+user_input['values'] = ('', 'Circle' ,'Square' ,'Rectangle' ,'Triangle')  #combobox list
                           
 
 #shapes list
-shape_list=["Circle", "Square", "Rectangle", "Triangle"]
+shape_list=["", "Circle", "Square", "Rectangle", "Triangle"]
 
 #design elements for user satisfaction
 #shapes label
