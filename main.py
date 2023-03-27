@@ -2,7 +2,7 @@
 
 #imports
 import tkinter as tk
-#from tkinter import messagebox
+from tkinter import messagebox
 from tkinter import ttk
 import math
 
@@ -36,50 +36,72 @@ def get_shape():
   user_shape = tk.Label(window, text=f"{shape_list[aShape]}", width=12, font=('Georgia', 12, "bold"), fg="#5E737A", bg="#D3E0E4")
   user_shape.place(x=0, y=90)
 
-
+  # -- selecting space/none -- #
+  if aShape == 0: 
+    messagebox.showerror("Invalid input", "Error select a shape")
+    return
 
   # --- function triangle perim&area --- #
   if aShape == 1:
     print("Triangle")
   
     def get_triangle():
-      def calculate_triangle_area(triangleSide1, triangleSide2, triangleSide3): #Nested function
-        #Semi Perimeter calculation
-        s =(float(triangleSide1.get()) + float(triangleSide2.get()) + float(triangleSide3.get())) / 2
-  
-        area = math.sqrt(s * (s - float(triangleSide1.get())) * (s - float(triangleSide2.get())) * (s - float(triangleSide3.get())))
-  
-        return area
-  
-      area = calculate_triangle_area(triangleSide1, triangleSide2, triangleSide3)
-      solvedAreaTriangle = tk.Label(window,text=(f"Area → {area:.2f}"),width=20,font=('Georgia', 15, "bold"),fg="#D3E0E4",  bg="#5E737A")
-      solvedAreaTriangle.place(x=0, y=300)
-      print(f"{area:.2f}")
+    #Declaring entrybox
+      triangleSide1 = triangle1Entry.get()
+      triangleSide2 = triangle2Entry.get()
+      triangleSide3 = triangle3Entry.get()
 
-      solvedPerimeterTriangle = tk.Label(window,text=("Perimeter → ", float(triangleSide1.get()) + float(triangleSide2.get()) + float(triangleSide3.get())), width=20, font=('Georgia', 15, "bold"),fg="#D3E0E4", bg="#5E737A")  #Does the calculation
+    # Validate input for triangle side lengths
+      if not triangleSide1.isnumeric() or not triangleSide2.isnumeric() or not triangleSide3.isnumeric():
+        messagebox.showerror("Invalid input", "Please enter numeric values for all sides.")
+        return
+      
+      if float(triangleSide1) <= 0 or float(triangleSide2) <= 0 or float(triangleSide3) <= 0:
+        messagebox.showerror("Invalid input", "Please enter positive values for all sides.")
+        return
+  
+      #Nested function of Area calculation
+      def calculate_triangle_area():
+        # Semi Perimeter calculation
+        s = (float(triangleSide1) + float(triangleSide2) + float(triangleSide3)) / 2
+        area = math.sqrt(s * (s - float(triangleSide1)) * (s - float(triangleSide2)) * (s - float(triangleSide3)))
+        return area
+        
+      # Calculate triangle area and perimeter
+      area = calculate_triangle_area()
+      solvedAreaTriangle = tk.Label(window, text=(f"Area → {area:.2f}"), width=20, font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
+      solvedAreaTriangle.place(x=0, y=300)
+      perimeter = float(triangleSide1) + float(triangleSide2) + float(triangleSide3)
+      solvedPerimeterTriangle = tk.Label(window, text=("Perimeter → ", perimeter), width=20, font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
       solvedPerimeterTriangle.place(x=0, y=350)
 
-    triangleLabel1 = tk.Label(window,text="Triangle side 1 → ", width=17,font=('Georgia', 10, "bold"),fg="#5E737A",bg="#D3E0E4")
 
-    triangleLabel1.place(x=20, y=130)
-    triangleSide1 = tk.Entry(window, width=10)
-    triangleSide1.place(x=185, y=130)
+  triangleLabel1 = tk.Label(window,text="Triangle side 1 → ", width=17,font=('Georgia', 10, "bold"),fg="#5E737A",bg="#D3E0E4")
 
-    triangleLabel2 = tk.Label(window,text="Triangle side 2 → ", width=17, font=('Georgia', 10, "bold"), fg="#5E737A",bg="#D3E0E4")
 
-    triangleLabel2.place(x=20, y=170)
-    triangleSide2 = tk.Entry(window, width=10)
-    triangleSide2.place(x=185, y=170)
 
-    triangleLabel3 = tk.Label(window, text="Triangle side 3 → ", width=17,font=('Georgia', 10, "bold"),fg="#5E737A",bg="#D3E0E4")
+  isnum = tk.Label(window,text='')
+  isnum.place(x=400,y=150)
   
-    triangleLabel3.place(x=20, y=210)
-    triangleSide3 = tk.Entry(window, width=10)
-    triangleSide3.place(x=185, y=210)
-
-    TriangleSolveArea = tk.Button(window,text="Solve!",font=("Georgia", 13),command=get_triangle)
-    TriangleSolveArea.place(x=450, y=50)
-
+  triangleLabel1.place(x=20, y=130)
+  triangle1Entry = tk.Entry(window, width=10)
+  triangle1Entry.place(x=185, y=130)
+  
+  triangleLabel2 = tk.Label(window,text="Triangle side 2 → ", width=17, font=('Georgia', 10, "bold"), fg="#5E737A",bg="#D3E0E4")
+  
+  triangleLabel2.place(x=20, y=170)
+  triangle2Entry = tk.Entry(window, width=10)
+  triangle2Entry.place(x=185, y=170)
+  
+  triangleLabel3 = tk.Label(window, text="Triangle side 3 → ", width=17,font=('Georgia', 10, "bold"),fg="#5E737A",bg="#D3E0E4")
+  
+  triangleLabel3.place(x=20, y=210)
+  triangle3Entry = tk.Entry(window, width=10)
+  triangle3Entry.place(x=185, y=210)
+  
+  TriangleSolveArea = tk.Button(window,text="Solve!",font=("Georgia", 13),command=get_triangle)
+  TriangleSolveArea.place(x=450, y=50)
+    
 # --- function rectangle perim&area --- #                                       
   if aShape == 2:
     print("Rectangle")
