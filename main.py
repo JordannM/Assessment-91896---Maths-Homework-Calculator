@@ -71,7 +71,7 @@ def get_shape():
           return
 
         if (int(triangleSide1) + int(triangleSide2)) <= int(triangleSide3) or (int(triangleSide2) + int(triangleSide3)) <= int(triangleSide1) or (int(triangleSide3) + int(triangleSide1)) <= int(triangleSide2):
-          messagebox.showerror("Error", "These side lengths will not create a valid triangle")
+          return messagebox.showerror("Error", "These side lengths will not create a valid triangle")
           return
     
         #Nested function of Area calculation
@@ -111,10 +111,13 @@ def get_shape():
       TriangleSolveArea.place(x=183, y=70)
       triangleTitle = tk.Label(triangleWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
       triangleTitle.place(x=0, y=10)
-      exitButton=tk.Button(triangleWindow,text="← Back to select",font=("Arial",13),command=triExit)
+      exitButton=tk.Button(triangleWindow,text="← Back to select",font=("Georgia",13),command=triExit)
       exitButton.place(x=0,y=400)
 # --- function rectangle perim&area --- #                                       
   if aShape == 2:
+    def recExit():
+      rectangleWindow.destroy()
+    
     print("Rectangle")
     rectangleWindow = tk.Toplevel()
     rectangleWindow.title("**RECTANGLE**")
@@ -159,12 +162,14 @@ def get_shape():
     rectangleTitle = tk.Label(rectangleWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
     rectangleTitle.place(x=0, y=10)
 
-
-  
-
+    exitButton=tk.Button(rectangleWindow,text="← Back to select",font=("Georgia",13),command=recExit)
+    exitButton.place(x=0,y=400)
 
 # --- function square perim&area --- #
   if aShape == 3:
+    def squaExit():
+      squareWindow.destroy()
+    
     print("Square")
     squareWindow = tk.Toplevel()
     squareWindow.title("**RECTANGLE**")
@@ -210,8 +215,15 @@ def get_shape():
     squareTitle = tk.Label(squareWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
     squareTitle.place(x=0, y=10)
 
+    exitButton=tk.Button(squareWindow,text="← Back to select",font=("Georgia",13),command=squaExit)
+    exitButton.place(x=0,y=400)
+
+
 # --- function circle perim&area --- #
   if aShape == 4:
+    def circExit():
+      circleWindow.destroy()
+    
     print("Circle")
     circleWindow = tk.Toplevel()
     circleWindow.title("**CIRCLE**")
@@ -249,7 +261,9 @@ def get_shape():
     circleSolveArea.place(x=183, y=70)
     circleTitle = tk.Label(circleWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
     circleTitle.place(x=0, y=10)
-    
+
+    exitButton=tk.Button(circleWindow,text="← Back to select",font=("Georgia",13),command=circExit)
+    exitButton.place(x=0,y=400)
   
 #buttons -- confirm
 button_confirm = tk.Button(window,text="Confirm shape.",font=("Georgia",13),command=get_shape)
