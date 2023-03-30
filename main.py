@@ -18,10 +18,10 @@ window.resizable(width=False, height=False)
 
 #--design elements for user satisfaction--
 
-title = tk.Label(window, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
+title = tk.Label(window, text="Perimeter and Area Calculator!", font=("Georgia", 25, "bold"), fg="#5E737A", bg="#D3E0E4")
 #shapes label
 
-select_shape = tk.Label(window, text="Select a shape:",font=("Georgia", 12,"bold"),fg="#5E737A", bg="#D3E0E4")
+select_shape = tk.Label(window, text="Select a shape:",font=("Georgia", 16,"bold"),fg="#5E737A", bg="#D3E0E4")
 
 user_input = ttk.Combobox(window, width=12, state="readonly")
 
@@ -43,6 +43,9 @@ def get_shape():
   
     # --- function triangle perim&area --- #
   if aShape == 1:
+      def triExit():
+        triangleWindow.destroy()
+
       print("Triangle")
       triangleWindow = tk.Toplevel()
       triangleWindow.title("**TRIANGLE**")
@@ -50,8 +53,8 @@ def get_shape():
       triangleWindow.config(bg="#D3E0E4")
       triangleWindow.resizable(width=False, height=False)
 
-      user_shape = tk.Label(triangleWindow, text=f"{shape_list[aShape]}", width=12, font=('Georgia', 12, "bold"), fg="#5E737A", bg="#D3E0E4")
-      user_shape.place(x=0, y=90)
+      user_shape = tk.Label(triangleWindow, text=f"{shape_list[aShape]}", width=10, font=('Georgia', 16, "bold"), fg="#5E737A", bg="#D3E0E4")
+      user_shape.place(x=0, y=75)
       def get_triangle():
       #Declaring entrybox
         triangleSide1 = triangle1Entry.get()
@@ -65,6 +68,10 @@ def get_shape():
         
         if float(triangleSide1) <= 0 or float(triangleSide2) <= 0 or float(triangleSide3) <= 0:
           messagebox.showerror("Invalid input", "Please enter positive values for all sides.")
+          return
+
+        if (int(triangleSide1) + int(triangleSide2)) <= int(triangleSide3) or (int(triangleSide2) + int(triangleSide3)) <= int(triangleSide1) or (int(triangleSide3) + int(triangleSide1)) <= int(triangleSide2):
+          messagebox.showerror("Error", "These side lengths will not create a valid triangle")
           return
     
         #Nested function of Area calculation
@@ -100,13 +107,24 @@ def get_shape():
       triangle3Entry = tk.Entry(triangleWindow, width=10)
       triangle3Entry.place(x=185, y=230)
       
-      TriangleSolveArea = tk.Button(triangleWindow,text="Solve!",font=("Georgia", 13),command=get_triangle)
-      TriangleSolveArea.place(x=450, y=50)
-  
+      TriangleSolveArea = tk.Button(triangleWindow,text="Solve!",font=("Georgia", 16),command=get_triangle)
+      TriangleSolveArea.place(x=183, y=70)
+      triangleTitle = tk.Label(triangleWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
+      triangleTitle.place(x=0, y=10)
+      exitButton=tk.Button(triangleWindow,text="← Back to select",font=("Arial",13),command=triExit)
+      exitButton.place(x=0,y=400)
 # --- function rectangle perim&area --- #                                       
   if aShape == 2:
     print("Rectangle")
-  
+    rectangleWindow = tk.Toplevel()
+    rectangleWindow.title("**RECTANGLE**")
+    rectangleWindow.geometry("800x500")
+    rectangleWindow.config(bg="#D3E0E4")
+    rectangleWindow.resizable(width=False, height=False)
+
+    user_shape = tk.Label(rectangleWindow, text=f"{shape_list[aShape]}", width=10, font=('Georgia', 16, "bold"), fg="#5E737A", bg="#D3E0E4")
+    user_shape.place(x=0, y=75)
+
     def get_rectangle():
       #Declaring entrybox
       rectangleWidth = rectangle1Entry.get()
@@ -120,24 +138,26 @@ def get_shape():
         messagebox.showerror("Invalid input", "Please enter positive values for length and width.")
         return
       
-      solvedAreaRectangle = tk.Label(window,text=("Area → ",float(rectangleWidth) * float(rectangleLength)),width=20,font=('Georgia', 15, "bold"),fg="#D3E0E4", bg="#5E737A")
+      solvedAreaRectangle = tk.Label(rectangleWindow,text=("Area → ",float(rectangleWidth) * float(rectangleLength)),width=20,font=('Georgia', 15, "bold"),fg="#D3E0E4", bg="#5E737A")
       solvedAreaRectangle.place(x=0, y=350)
 
-      solvedPerimeterRectangle = tk.Label(window, text=("Perimeter → ", float(rectangleWidth) + float(rectangleWidth) + float(rectangleLength) + float(rectangleLength)),width=20, font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")  #Does the calculation for perimeter
+      solvedPerimeterRectangle = tk.Label(rectangleWindow, text=("Perimeter → ", float(rectangleWidth) + float(rectangleWidth) + float(rectangleLength) + float(rectangleLength)),width=20, font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")  #Does the calculation for perimeter
       solvedPerimeterRectangle.place(x=0, y=450)
 
-    rectangleLabel1 = tk.Label(window, text="Retangle Width →     ", width=18, font=('Georgia', 10, "bold"), fg="#5E737A", bg="#D3E0E4")
+    rectangleLabel1 = tk.Label(rectangleWindow, text="Retangle Width →     ", width=18, font=('Georgia', 10, "bold"), fg="#5E737A", bg="#D3E0E4")
     rectangleLabel1.place(x=20, y=150)
-    rectangle1Entry = tk.Entry(window, width=10)
+    rectangle1Entry = tk.Entry(rectangleWindow, width=10)
     rectangle1Entry.place(x=185, y=150)
 
-    rectangleLabel2 = tk.Label(window, text="Rectangle Length → ", width=18, font=('Georgia', 10, "bold"), fg="#5E737A", bg="#D3E0E4")
+    rectangleLabel2 = tk.Label(rectangleWindow, text="Rectangle Length → ", width=18, font=('Georgia', 10, "bold"), fg="#5E737A", bg="#D3E0E4")
     rectangleLabel2.place(x=20, y=190)
-    rectangle2Entry = tk.Entry(window, width=10)
+    rectangle2Entry = tk.Entry(rectangleWindow, width=10)
     rectangle2Entry.place(x=185, y=190)
 
-    rectangleSolveArea = tk.Button(window,text="Solve!",font=("Georgia", 13),command=get_rectangle)
-    rectangleSolveArea.place(x=450, y=50)
+    rectangleSolveArea = tk.Button(rectangleWindow,text="Solve!",font=("Georgia", 16),command=get_rectangle)
+    rectangleSolveArea.place(x=183, y=70)
+    rectangleTitle = tk.Label(rectangleWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
+    rectangleTitle.place(x=0, y=10)
 
 
   
@@ -146,6 +166,14 @@ def get_shape():
 # --- function square perim&area --- #
   if aShape == 3:
     print("Square")
+    squareWindow = tk.Toplevel()
+    squareWindow.title("**RECTANGLE**")
+    squareWindow.geometry("800x500")
+    squareWindow.config(bg="#D3E0E4")
+    squareWindow.resizable(width=False, height=False)
+
+    user_shape = tk.Label(squareWindow, text=f"{shape_list[aShape]}", width=10, font=('Georgia', 16, "bold"), fg="#5E737A", bg="#D3E0E4")
+    user_shape.place(x=0, y=75)
 
     def get_square():
       #Declaring entrybox
@@ -161,29 +189,38 @@ def get_shape():
         messagebox.showerror("Invalid input", "Please enter positive values for length and width.")
         return
       
-      solvedAreaSquare = tk.Label(window,text=("Area → ", float(squareWidth) * float(squareLength)),width=20,font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
+      solvedAreaSquare = tk.Label(squareWindow,text=("Area → ", float(squareWidth) * float(squareLength)),width=20,font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
       solvedAreaSquare.place(x=0, y=350)
   
-      solvedPerimeterSquare = tk.Label(window,text=("Perimeter → ",float(squareWidth) + float(squareWidth) + float(squareLength) + float(squareLength)),width=20,font=('Georgia', 15, "bold"),fg="#D3E0E4", bg="#5E737A")  #Does the calculation
+      solvedPerimeterSquare = tk.Label(squareWindow,text=("Perimeter → ",float(squareWidth) + float(squareWidth) + float(squareLength) + float(squareLength)),width=20,font=('Georgia', 15, "bold"),fg="#D3E0E4", bg="#5E737A")  #Does the calculation
       solvedPerimeterSquare.place(x=0, y=450)
   
-    squareLabel1 = tk.Label(window,text="Square Width → ",width=17 ,font=('Georgia', 10, "bold"), fg="#5E737A",bg="#D3E0E4")
-    squareLabel1.place(x=20, y=130)
-    square1Entry = tk.Entry(window, width=10)
-    square1Entry.place(x=185, y=130)
+    squareLabel1 = tk.Label(squareWindow,text="Square Width → ",width=17 ,font=('Georgia', 10, "bold"), fg="#5E737A",bg="#D3E0E4")
+    squareLabel1.place(x=20, y=150)
+    square1Entry = tk.Entry(squareWindow, width=10)
+    square1Entry.place(x=185, y=150)
   
-    squareLabel2 = tk.Label(window,text="Square Length → ", width=18,font=('Georgia', 10, "bold"),fg="#5E737A",bg="#D3E0E4")
-    squareLabel2.place(x=20, y=200)
-    square2Entry = tk.Entry(window, width=10)
-    square2Entry.place(x=185, y=170)
+    squareLabel2 = tk.Label(squareWindow,text="Square Length → ", width=18,font=('Georgia', 10, "bold"),fg="#5E737A",bg="#D3E0E4")
+    squareLabel2.place(x=20, y=190)
+    square2Entry = tk.Entry(squareWindow, width=10)
+    square2Entry.place(x=185, y=190)
   
-    squareSolveArea = tk.Button(window,text="Solve!",font=("Georgia", 13),command=get_square)
-    squareSolveArea.place(x=450, y=50)
+    squareSolveArea = tk.Button(squareWindow,text="Solve!",font=("Georgia", 16),command=get_square)
+    squareSolveArea.place(x=183, y=70)
+    squareTitle = tk.Label(squareWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
+    squareTitle.place(x=0, y=10)
 
 # --- function circle perim&area --- #
   if aShape == 4:
     print("Circle")
+    circleWindow = tk.Toplevel()
+    circleWindow.title("**CIRCLE**")
+    circleWindow.geometry("800x500")
+    circleWindow.config(bg="#D3E0E4")
+    circleWindow.resizable(width=False, height=False)
 
+    user_shape = tk.Label(circleWindow, text=f"{shape_list[aShape]}", width=10, font=('Georgia', 16, "bold"), fg="#5E737A", bg="#D3E0E4")
+    user_shape.place(x=0, y=75)
     def get_circle():
       #Declaring entryboxes
       circleRadius = circle1Entry.get()
@@ -197,26 +234,27 @@ def get_shape():
         messagebox.showerror("Invalid input", "Please enter positive values for length and width.")
         return
       
-      solvedAreaCircle = tk.Label(window,text=("Area → ", math.pi * float(circleRadius)** 2 ),width=20,font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
+      solvedAreaCircle = tk.Label(circleWindow,text=("Area → ", math.pi * float(circleRadius)** 2 ),width=20,font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
       solvedAreaCircle.place(x=0, y=350)
-      solvedCircumferenceCircle = tk.Label(window,text=("Circumference → ", math.pi * (2 * float(circleRadius)) ),width=20,font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
+      solvedCircumferenceCircle = tk.Label(circleWindow,text=("Circumference → ", math.pi * (2 * float(circleRadius)) ),width=20,font=('Georgia', 15, "bold"), fg="#D3E0E4", bg="#5E737A")
       solvedCircumferenceCircle.place(x=0,y=450)
 
 
-    circleLabel1 = tk.Label(window,text="Circle Radius → ",width=17 ,font=('Georgia', 10, "bold"), fg="#5E737A",bg="#D3E0E4")
-    circleLabel1.place(x=20, y=130)
-    circle1Entry = tk.Entry(window, width=10)
-    circle1Entry.place(x=185, y=130)
+    circleLabel1 = tk.Label(circleWindow,text="Circle Radius → ",width=17 ,font=('Georgia', 10, "bold"), fg="#5E737A",bg="#D3E0E4")
+    circleLabel1.place(x=20, y=150)
+    circle1Entry = tk.Entry(circleWindow, width=10)
+    circle1Entry.place(x=185, y=150)
 
-    circleSolveArea = tk.Button(window,text="Solve!",font=("Georgia", 13),command=get_circle)
-    circleSolveArea.place(x=450, y=50)
-
+    circleSolveArea = tk.Button(circleWindow,text="Solve!",font=("Georgia", 16),command=get_circle)
+    circleSolveArea.place(x=183, y=70)
+    circleTitle = tk.Label(circleWindow, text="Perimeter and Area Calculator!", font=("Georgia", 20, "bold"), fg="#5E737A", bg="#D3E0E4")
+    circleTitle.place(x=0, y=10)
     
   
 #buttons -- confirm
 button_confirm = tk.Button(window,text="Confirm shape.",font=("Georgia",13),command=get_shape)
 #placements -- confirm
-select_shape.place(x=5,y=60)
-user_input.place(x=153, y=62)
-button_confirm.place(x=280, y=50)
-title.place(x=0, y=10)
+select_shape.place(x=150,y=250)
+user_input.place(x=360, y=256)
+button_confirm.place(x=280, y=300)
+title.place(x=100, y=200)
